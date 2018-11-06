@@ -17,20 +17,19 @@ class SelectionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSelectionsView()
         setupContainerView()
         setupScrollView()
     }
     
-    func setupContainerView() {
-        setupSelectionsView()
-        containerView.addSubview(imageView)
-        containerView.addSubview(selectionsView)
-        
-        containerView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
-    }
-    
     func setupSelectionsView() {
         selectionsView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
+    }
+    
+    func setupContainerView() {
+        containerView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
+        containerView.addSubview(imageView)
+        containerView.addSubview(selectionsView)
     }
     
     func setupScrollView() {
@@ -39,19 +38,17 @@ class SelectionsViewController: UIViewController {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.contentSize = containerView.bounds.size
+        scrollView.addSubview(containerView)
+        
+        setZoomScale()
+        setupGestureRecognizer()
         
         view.addSubview(scrollView)
-        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
-        
-        scrollView.addSubview(containerView)
-        setZoomScale()
-        
-        setupGestureRecognizer()
     }
     
     func setZoomScale() {

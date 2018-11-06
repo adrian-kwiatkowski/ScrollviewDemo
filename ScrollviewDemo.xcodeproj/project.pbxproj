@@ -8,20 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		59D105742190924B00915DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105732190924B00915DC6 /* AppDelegate.swift */; };
-		59D105762190924B00915DC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105752190924B00915DC6 /* ViewController.swift */; };
+		59D105762190924B00915DC6 /* SelectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105752190924B00915DC6 /* SelectionsViewController.swift */; };
 		59D105792190924B00915DC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D105772190924B00915DC6 /* Main.storyboard */; };
 		59D1057B2190924C00915DC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D1057A2190924C00915DC6 /* Assets.xcassets */; };
 		59D1057E2190924C00915DC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D1057C2190924C00915DC6 /* LaunchScreen.storyboard */; };
+		59D1058A21919AD700915DC6 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D1058921919AD700915DC6 /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		59D105702190924B00915DC6 /* ScrollviewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollviewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D105732190924B00915DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59D105752190924B00915DC6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		59D105752190924B00915DC6 /* SelectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsViewController.swift; sourceTree = "<group>"; };
 		59D105782190924B00915DC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		59D1057A2190924C00915DC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59D1057D2190924C00915DC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59D1057F2190924C00915DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59D1058921919AD700915DC6 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				59D105732190924B00915DC6 /* AppDelegate.swift */,
-				59D105752190924B00915DC6 /* ViewController.swift */,
+				59D105752190924B00915DC6 /* SelectionsViewController.swift */,
+				59D1058921919AD700915DC6 /* MenuViewController.swift */,
 				59D105772190924B00915DC6 /* Main.storyboard */,
 				59D1057A2190924C00915DC6 /* Assets.xcassets */,
 				59D1057C2190924C00915DC6 /* LaunchScreen.storyboard */,
@@ -135,7 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59D105762190924B00915DC6 /* ViewController.swift in Sources */,
+				59D105762190924B00915DC6 /* SelectionsViewController.swift in Sources */,
+				59D1058A21919AD700915DC6 /* MenuViewController.swift in Sources */,
 				59D105742190924B00915DC6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +289,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H634JM33L;
 				INFOPLIST_FILE = ScrollviewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +308,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H634JM33L;
 				INFOPLIST_FILE = ScrollviewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

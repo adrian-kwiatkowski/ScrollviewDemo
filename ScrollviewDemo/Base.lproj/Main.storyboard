@@ -23,7 +23,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Adding Mode"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="xOp-I9-Niz"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="addingMode" id="xOp-I9-Niz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xu-0c-dDv">
+                                <rect key="frame" x="142" y="385" width="91" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Editing Mode"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="editingMode" id="MSQ-SF-Jtz"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -70,4 +78,7 @@
             <point key="canvasLocation" x="69.599999999999994" y="23.838080959520241"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="MSQ-SF-Jtz"/>
+    </inferredMetricsTieBreakers>
 </document>

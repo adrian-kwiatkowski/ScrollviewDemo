@@ -10,33 +10,55 @@ import UIKit
 
 class SelectionsViewController: UIViewController {
     
-    var scrollView: UIScrollView!
-    var imageView: UIImageView!
+    lazy var scrollView: UIScrollView = UIScrollView(frame: view.bounds)
+    var imageView: UIImageView = UIImageView(image: UIImage(named: "image.png"))
+    var selectionsView: UIView = UIView()
+    var containerView: UIView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupContainerView()
+        setupScrollView()
+    }
+    
+    func setupContainerView() {
+        setupSelectionsView()
+        containerView.addSubview(imageView)
+        containerView.addSubview(selectionsView)
         
-        imageView = UIImageView(image: UIImage(named: "image.png"))
-        
-        scrollView = UIScrollView(frame: view.bounds)
+        containerView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
+    }
+    
+    func setupSelectionsView() {
+        selectionsView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
+    }
+    
+    func setupScrollView() {
         scrollView.backgroundColor = UIColor.black
-        scrollView.contentSize = imageView.bounds.size
-        scrollView.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleWidth.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue)
-        scrollView.contentOffset = CGPoint(x: 100, y: 100)
+        scrollView.delegate = self
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = containerView.bounds.size
         
-        scrollView.addSubview(imageView)
         view.addSubview(scrollView)
         
-        scrollView.delegate = self
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
+        
+        scrollView.addSubview(containerView)
         setZoomScale()
+        
         setupGestureRecognizer()
     }
     
     func setZoomScale() {
-        let imageViewSize = imageView.bounds.size
+        let containerViewSize = containerView.bounds.size
         let scrollViewSize = scrollView.bounds.size
-        let widthScale = scrollViewSize.width / imageViewSize.width
-        let heightScale = scrollViewSize.height / imageViewSize.height
+        let widthScale = scrollViewSize.width / containerViewSize.width
+        let heightScale = scrollViewSize.height / containerViewSize.height
         
         scrollView.minimumZoomScale = min(widthScale, heightScale)
         scrollView.zoomScale = 1.0
@@ -50,15 +72,15 @@ class SelectionsViewController: UIViewController {
 
 extension SelectionsViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imageView
+        return containerView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        let imageViewSize = imageView.frame.size
+        let containerViewSize = containerView.frame.size
         let scrollViewSize = scrollView.bounds.size
         
-        let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
-        let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
+        let verticalPadding = containerViewSize.height < scrollViewSize.height ? (scrollViewSize.height - containerViewSize.height) / 2 : 0
+        let horizontalPadding = containerViewSize.width < scrollViewSize.width ? (scrollViewSize.width - containerViewSize.width) / 2 : 0
         
         scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
     }

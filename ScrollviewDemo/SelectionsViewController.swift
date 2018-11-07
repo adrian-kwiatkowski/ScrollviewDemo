@@ -70,22 +70,19 @@ class SelectionsViewController: UIViewController {
         setZoomScale()
     }
     
-    fileprivate func addSelection() {
-        
-    }
-    
     fileprivate func drawSelections() {
         clearSelectionsView()
         
         selectionsArray.enumerated().forEach { (index, point) in
+            let selectionWidthRatio: CGFloat = 0.24
             let imageNumber = (index % 4) + 1
             let imageName = "selection\(imageNumber).png"
             
             if let image = UIImage(named: imageName) {
                 let selectionImageView = UIImageView(image: image)
                 
-                let selectionWidth = image.size.width * 2.5
-                let selectionHeight = image.size.height * 2.5
+                let selectionWidth = imageView.bounds.width * selectionWidthRatio
+                let selectionHeight = (selectionWidth / image.size.width) * image.size.height
                 let selectionXCoordinate = point.x - (selectionWidth / 2)
                 let selectionYCoordinate = point.y - (selectionHeight / 2)
                 

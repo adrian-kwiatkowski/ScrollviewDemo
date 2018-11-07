@@ -6,7 +6,62 @@
 //  Copyright © 2018 Adrian Kwiatkowski. All rights reserved.
 //
 
-var selectionsArray: [CGPoint] = []
+class AddingSelectionsViewController: SelectionsViewController {
+    override func setupGestureRecognizers() {
+        super.setupGestureRecognizers()
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        selectionsView.addGestureRecognizer(longPress)
+    }
+    
+    @objc func handleLongPress(recognizer: UILongPressGestureRecognizer) {
+        guard recognizer.state == .began else { return }
+        
+        let longPressedCenter = Selection(point: recognizer.location(in: selectionsView), isMarked: false)
+        
+        selectionsArray.append(longPressedCenter)
+        insertSelectionSubviews()
+    }
+}
+
+class EditingSelectionsViewController: SelectionsViewController {
+    override func setupGestureRecognizers() {
+        super.setupGestureRecognizers()
+        
+        selectionsView.subviews.forEach { (view) in
+            let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
+            view.isUserInteractionEnabled = true
+            view.addGestureRecognizer(singleTap)
+        }
+    }
+    
+    @objc func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        guard let recognizerImageView = recognizer.view as? UIImageView else { return }
+        guard let tappedViewIndex: Int = selectionsView.subviews.firstIndex(of: recognizerImageView) else { return }
+        
+        selectionsArray[tappedViewIndex].isMarked.toggle()
+        
+        
+        let selection = selectionsArray[tappedViewIndex]
+        print("selection after toggle: \(selection.isMarked)")
+        
+        let imageNumber = (tappedViewIndex % 4) + 1
+        let imageToSet = selection.isMarked ? "markedSelection\(imageNumber).png" : "selection\(imageNumber).png"
+        
+        recognizerImageView.image = UIImage(named: imageToSet)
+    }
+    
+    func updateSelectionsImages() {
+        
+    }
+}
+
+var selectionsArray: [Selection] = []
+
+struct Selection {
+    let point: CGPoint
+    var isMarked: Bool
+}
 
 import UIKit
 
@@ -16,14 +71,17 @@ class SelectionsViewController: UIViewController {
     var imageView: UIImageView = UIImageView(image: UIImage(named: "leaflet.jpg"))
     var selectionsView: UIView = UIView()
     var containerView: UIView = UIView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSelectionsView()
         setupContainerView()
         setupScrollView()
         
-        drawSelections()
+        
+        insertSelectionSubviews()
+        
+        setupGestureRecognizers()
     }
     
     func setupSelectionsView() {
@@ -45,7 +103,6 @@ class SelectionsViewController: UIViewController {
         scrollView.addSubview(containerView)
         
         setZoomScale()
-        setupGestureRecognizers()
         
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +110,12 @@ class SelectionsViewController: UIViewController {
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
+    }
+    
+    func setupGestureRecognizers() {
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
+        doubleTap.numberOfTapsRequired = 2
+        selectionsView.addGestureRecognizer(doubleTap)
     }
     
     func setZoomScale() {
@@ -70,13 +133,14 @@ class SelectionsViewController: UIViewController {
         setZoomScale()
     }
     
-    fileprivate func drawSelections() {
+    fileprivate func insertSelectionSubviews() {
         clearSelectionsView()
         
-        selectionsArray.enumerated().forEach { (index, point) in
+        selectionsArray.enumerated().forEach { (index, selection) in
+            let point = selection.point
             let selectionWidthRatio: CGFloat = 0.24
             let imageNumber = (index % 4) + 1
-            let imageName = "selection\(imageNumber).png"
+            let imageName = selection.isMarked ? "markedSelection\(imageNumber).png" : "selection\(imageNumber).png"
             
             if let image = UIImage(named: imageName) {
                 let selectionImageView = UIImageView(image: image)
@@ -108,24 +172,16 @@ extension SelectionsViewController: UIScrollViewDelegate {
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         let containerViewSize = containerView.frame.size
         let scrollViewSize = scrollView.bounds.size
-
+        
         let verticalPadding = containerViewSize.height < scrollViewSize.height ? (scrollViewSize.height - containerViewSize.height) / 2 : 0
         let horizontalPadding = containerViewSize.width < scrollViewSize.width ? (scrollViewSize.width - containerViewSize.width) / 2 : 0
-
+        
         scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
     }
 }
 
 //MARK: - gestures
 extension SelectionsViewController {
-    func setupGestureRecognizers() {
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
-        doubleTap.numberOfTapsRequired = 2
-        selectionsView.addGestureRecognizer(doubleTap)
-        
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
-        selectionsView.addGestureRecognizer(longPress)
-    }
     
     @objc func handleDoubleTap(recognizer: UITapGestureRecognizer) {
         
@@ -134,14 +190,5 @@ extension SelectionsViewController {
         } else {
             scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
         }
-    }
-    
-    @objc func handleLongPress(recognizer: UILongPressGestureRecognizer) {
-        guard recognizer.state == .began else { return }
-        
-        let longPressedCenter = recognizer.location(in: selectionsView)
-        
-        selectionsArray.append(longPressedCenter)
-        drawSelections()
     }
 }

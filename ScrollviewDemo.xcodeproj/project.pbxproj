@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5989CD2E21944F960013CC10 /* AdditionalGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5989CD2D21944F960013CC10 /* AdditionalGestures.swift */; };
 		59D105742190924B00915DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105732190924B00915DC6 /* AppDelegate.swift */; };
 		59D105762190924B00915DC6 /* SelectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105752190924B00915DC6 /* SelectionsViewController.swift */; };
 		59D105792190924B00915DC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D105772190924B00915DC6 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5989CD2D21944F960013CC10 /* AdditionalGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalGestures.swift; sourceTree = "<group>"; };
 		59D105702190924B00915DC6 /* ScrollviewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollviewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D105732190924B00915DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59D105752190924B00915DC6 /* SelectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsViewController.swift; sourceTree = "<group>"; };
@@ -37,11 +39,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5989CD2C219330C90013CC10 /* New Group */ = {
+		5989CD2C219330C90013CC10 /* Selections */ = {
 			isa = PBXGroup;
 			children = (
+				59D105752190924B00915DC6 /* SelectionsViewController.swift */,
+				5989CD2D21944F960013CC10 /* AdditionalGestures.swift */,
 			);
-			path = "New Group";
+			path = Selections;
 			sourceTree = "<group>";
 		};
 		59D105672190924B00915DC6 = {
@@ -64,13 +68,12 @@
 			isa = PBXGroup;
 			children = (
 				59D105732190924B00915DC6 /* AppDelegate.swift */,
-				59D105752190924B00915DC6 /* SelectionsViewController.swift */,
 				59D1058921919AD700915DC6 /* MenuViewController.swift */,
 				59D105772190924B00915DC6 /* Main.storyboard */,
 				59D1057A2190924C00915DC6 /* Assets.xcassets */,
 				59D1057C2190924C00915DC6 /* LaunchScreen.storyboard */,
 				59D1057F2190924C00915DC6 /* Info.plist */,
-				5989CD2C219330C90013CC10 /* New Group */,
+				5989CD2C219330C90013CC10 /* Selections */,
 			);
 			path = ScrollviewDemo;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			files = (
 				59D105762190924B00915DC6 /* SelectionsViewController.swift in Sources */,
 				59D1058A21919AD700915DC6 /* MenuViewController.swift in Sources */,
+				5989CD2E21944F960013CC10 /* AdditionalGestures.swift in Sources */,
 				59D105742190924B00915DC6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

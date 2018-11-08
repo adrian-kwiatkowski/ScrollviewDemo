@@ -15,4 +15,13 @@ class MenuViewController: UIViewController {
 
     }
     
+    @IBAction func addingModeButtonTapped(_ sender: Any) {
+        let vc = SelectionsViewController(mode: AddingMode())
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func editingModeButtonTapped(_ sender: Any) {
+        let vc = SelectionsViewController(mode: EditingMode())
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

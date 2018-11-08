@@ -6,69 +6,31 @@
 //  Copyright © 2018 Adrian Kwiatkowski. All rights reserved.
 //
 
-class AddingSelectionsViewController: SelectionsViewController {
-    
-    
-    
-    override func setupGestureRecognizers() {
-        super.setupGestureRecognizers()
-        
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
-        selectionsView.addGestureRecognizer(longPress)
-    }
-    
-    @objc func handleLongPress(recognizer: UILongPressGestureRecognizer) {
-        guard recognizer.state == .began else { return }
-        
-        let longPressedCenter = Selection(point: recognizer.location(in: selectionsView), isMarked: false)
-        
-        selectionsArray.append(longPressedCenter)
-    }
-}
 
-class EditingSelectionsViewController: SelectionsViewController {
-    override func setupGestureRecognizers() {
-        super.setupGestureRecognizers()
-        
-        selectionsView.subviews.forEach { (view) in
-            let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
-            view.isUserInteractionEnabled = true
-            view.addGestureRecognizer(singleTap)
-        }
-    }
-    
-    @objc func handleSingleTap(recognizer: UITapGestureRecognizer) {
-        guard let recognizerImageView = recognizer.view as? UIImageView else { return }
-        guard let tappedViewIndex: Int = selectionsView.subviews.firstIndex(of: recognizerImageView) else { return }
-        
-        selectionsArray[tappedViewIndex].isMarked.toggle()
-        
-        
-        let selection = selectionsArray[tappedViewIndex]
-        print("selection after toggle: \(selection.isMarked)")
-        
-        let imageNumber = (tappedViewIndex % 4) + 1
-        let imageToSet = selection.isMarked ? "markedSelection\(imageNumber).png" : "selection\(imageNumber).png"
-        
-        recognizerImageView.image = UIImage(named: imageToSet)
-    }
-}
 
-var selectionsArray: [Selection] = []
+import UIKit
+
+// data mock
+var selectionsCoordinatesInRealm: [Selection] = [] //[Selection(point: CGPoint(x: 163.0, y: 339.0), isMarked: false), Selection(point: CGPoint(x: 196.3333282470703, y: 632.0), isMarked: true), Selection(point: CGPoint(x: 272.0, y: 419.6666564941406), isMarked: false)]
 
 struct Selection {
     let point: CGPoint
     var isMarked: Bool
 }
 
-import UIKit
-
-class SelectionsViewController: UIViewController {
+class SelectionsViewController: UIViewController, AdditionalGestureDelegate {
+    func additionalGesture(_ gesture: AdditionalGestures, performedGestureAt point: CGPoint) {
+        selectionsCoordinatesInRealm.append(Selection(point: point, isMarked: false))
+        
+        refreshSelectionsView()
+    }
     
     lazy var scrollView: UIScrollView = UIScrollView(frame: view.bounds)
     var imageView: UIImageView = UIImageView(image: UIImage(named: "leaflet.jpg"))
     var selectionsView: UIView = UIView()
     var containerView: UIView = UIView()
+    
+    var additionalGestures: AdditionalGestures
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,40 +38,57 @@ class SelectionsViewController: UIViewController {
         setupContainerView()
         setupScrollView()
         
-        clearSelectionsView()
-        addSubviewsToSelectionsView()
-        fillSelectionViewSubviewsWithImages()
+        refreshSelectionsView()
         
         setupGestureRecognizers()
+        
+        additionalGestures.setupAdditionalGestures(forView: selectionsView)
+        additionalGestures.gestureDelegate = self
     }
     
-    func addSubviewsToSelectionsView() {
-        //        let selectionWidthRatio: CGFloat = 0.24
-        
-        
-        selectionsArray.enumerated().forEach { (index, selection) in
-            //            let imageToSet = returnSelectionVariationImageAsset(number: index, isMarked: selection.isMarked)
-            //            let point = selection.point
-            
-            //            let subviewWidth = imageView.bounds.width * selectionWidthRatio
-            //            let subviewHeight = (subviewWidth / imageToSet.size.width) * imageToSet.size.height
-            //            let subviewCenterX = point.x - (subviewWidth / 2)
-            //            let subviewCenterY = point.y - (subviewHeight / 2)
-            
+    init(mode: AdditionalGestures) {
+        self.additionalGestures = mode
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func refreshSelectionsView() {
+        removeSubviewsFromSelectionsView()
+        addEmptySubviewsToSelectionsView()
+        fillSelectionViewSubviewsWithImages()
+    }
+    
+    func addEmptySubviewsToSelectionsView() {
+        selectionsCoordinatesInRealm.enumerated().forEach { (index, selection) in
             let selectionCenter = CGPoint(x: selection.point.x, y: selection.point.y)
-            let subviewToAdd = UIImageView(frame: CGRect(origin: selectionCenter, size: CGSize()))
+            let subviewToAdd = UIImageView(frame: CGRect(origin: selectionCenter, size: CGSize(width: 50.0, height: 50.0)))
+            subviewToAdd.backgroundColor = UIColor.red
             
             selectionsView.addSubview(subviewToAdd)
         }
     }
     
     func fillSelectionViewSubviewsWithImages() {
+        let selectionWidthRatio: CGFloat = 0.24 // selection width should take 24% of the leaflet's width
+        
         selectionsView.subviews.enumerated().forEach { (index, subview) in
-            guard let selectionImageView = subview as? UIImageView else { return }
-            
-            let selection = selectionsArray[index]
-            
-            selectionImageView.image = returnSelectionVariationImageAsset(number: index, isMarked: selection.isMarked)
+//            guard let selectionImageView = subview as? UIImageView else { return }
+//
+//            let selection = selectionsCoordinatesInRealm[index]
+//            let imageToSet = returnSelectionVariationImageAsset(number: index, isMarked: selection.isMarked)
+//
+//            selectionImageView.image = imageToSet
+//
+//            let point = selection.point
+//            let subviewWidth = imageView.bounds.width * selectionWidthRatio
+//            let subviewHeight = (subviewWidth / imageToSet.size.width) * imageToSet.size.height
+//            let subviewCenterX = point.x //- (subviewWidth / 2)
+//            let subviewCenterY = point.y //- (subviewHeight / 2)
+//
+//            selectionImageView.frame = CGRect(x: subviewCenterX, y: subviewCenterY, width: subviewWidth, height: subviewHeight)
         }
     }
     
@@ -168,9 +147,7 @@ class SelectionsViewController: UIViewController {
         setZoomScale()
     }
     
-    
-    
-    fileprivate func clearSelectionsView() {
+    fileprivate func removeSubviewsFromSelectionsView() {
         selectionsView.subviews.forEach { (subview) in
             subview.removeFromSuperview()
         }

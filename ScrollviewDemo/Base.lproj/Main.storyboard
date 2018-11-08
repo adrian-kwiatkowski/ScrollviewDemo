@@ -18,17 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JkM-xg-tsn">
-                                <rect key="frame" x="141" y="201" width="92" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JkM-xg-tsn">
+                                <rect key="frame" x="141.5" y="218.5" width="92" height="30"/>
                                 <state key="normal" title="Adding Mode"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="addingMode" id="xOp-I9-Niz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xu-0c-dDv">
-                                <rect key="frame" x="142" y="385" width="91" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xu-0c-dDv">
+                                <rect key="frame" x="142" y="418.5" width="91" height="30"/>
                                 <state key="normal" title="Editing Mode"/>
                                 <connections>
                                     <segue destination="4eh-Fm-ePE" kind="show" id="qjE-Xg-Lne"/>
@@ -36,6 +34,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JkM-xg-tsn" firstAttribute="centerX" secondItem="N4G-NR-iSo" secondAttribute="centerX" id="1gX-0M-1Sw"/>
+                            <constraint firstItem="6Xu-0c-dDv" firstAttribute="centerX" secondItem="N4G-NR-iSo" secondAttribute="centerX" id="Q7C-Uc-7v3"/>
+                            <constraint firstItem="JkM-xg-tsn" firstAttribute="centerY" secondItem="N4G-NR-iSo" secondAttribute="centerY" constant="-100" id="ZDq-GE-1fI"/>
+                            <constraint firstItem="6Xu-0c-dDv" firstAttribute="centerY" secondItem="N4G-NR-iSo" secondAttribute="centerY" constant="100" id="Zd5-22-yaT"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="yNy-P5-Jv7"/>
                     </view>
                     <navigationItem key="navigationItem" id="tgf-Tk-p4B"/>

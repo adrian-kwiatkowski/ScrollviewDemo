@@ -7,6 +7,9 @@
 //
 
 class AddingSelectionsViewController: SelectionsViewController {
+    
+    
+    
     override func setupGestureRecognizers() {
         super.setupGestureRecognizers()
         
@@ -20,7 +23,6 @@ class AddingSelectionsViewController: SelectionsViewController {
         let longPressedCenter = Selection(point: recognizer.location(in: selectionsView), isMarked: false)
         
         selectionsArray.append(longPressedCenter)
-        insertSelectionSubviews()
     }
 }
 
@@ -50,10 +52,6 @@ class EditingSelectionsViewController: SelectionsViewController {
         
         recognizerImageView.image = UIImage(named: imageToSet)
     }
-    
-    func updateSelectionsImages() {
-        
-    }
 }
 
 var selectionsArray: [Selection] = []
@@ -78,10 +76,47 @@ class SelectionsViewController: UIViewController {
         setupContainerView()
         setupScrollView()
         
-        
-        insertSelectionSubviews()
+        clearSelectionsView()
+        addSubviewsToSelectionsView()
+        fillSelectionViewSubviewsWithImages()
         
         setupGestureRecognizers()
+    }
+    
+    func addSubviewsToSelectionsView() {
+        //        let selectionWidthRatio: CGFloat = 0.24
+        
+        
+        selectionsArray.enumerated().forEach { (index, selection) in
+            //            let imageToSet = returnSelectionVariationImageAsset(number: index, isMarked: selection.isMarked)
+            //            let point = selection.point
+            
+            //            let subviewWidth = imageView.bounds.width * selectionWidthRatio
+            //            let subviewHeight = (subviewWidth / imageToSet.size.width) * imageToSet.size.height
+            //            let subviewCenterX = point.x - (subviewWidth / 2)
+            //            let subviewCenterY = point.y - (subviewHeight / 2)
+            
+            let selectionCenter = CGPoint(x: selection.point.x, y: selection.point.y)
+            let subviewToAdd = UIImageView(frame: CGRect(origin: selectionCenter, size: CGSize()))
+            
+            selectionsView.addSubview(subviewToAdd)
+        }
+    }
+    
+    func fillSelectionViewSubviewsWithImages() {
+        selectionsView.subviews.enumerated().forEach { (index, subview) in
+            guard let selectionImageView = subview as? UIImageView else { return }
+            
+            let selection = selectionsArray[index]
+            
+            selectionImageView.image = returnSelectionVariationImageAsset(number: index, isMarked: selection.isMarked)
+        }
+    }
+    
+    func returnSelectionVariationImageAsset(number: Int, isMarked: Bool) -> UIImage {
+        let imageVariationNumber = (number % 4) + 1
+        let imageVariationName = isMarked ? "markedSelection\(imageVariationNumber).png" : "selection\(imageVariationNumber).png"
+        return UIImage(named: imageVariationName) ?? UIImage()
     }
     
     func setupSelectionsView() {
@@ -133,29 +168,7 @@ class SelectionsViewController: UIViewController {
         setZoomScale()
     }
     
-    fileprivate func insertSelectionSubviews() {
-        clearSelectionsView()
-        
-        selectionsArray.enumerated().forEach { (index, selection) in
-            let point = selection.point
-            let selectionWidthRatio: CGFloat = 0.24
-            let imageNumber = (index % 4) + 1
-            let imageName = selection.isMarked ? "markedSelection\(imageNumber).png" : "selection\(imageNumber).png"
-            
-            if let image = UIImage(named: imageName) {
-                let selectionImageView = UIImageView(image: image)
-                
-                let selectionWidth = imageView.bounds.width * selectionWidthRatio
-                let selectionHeight = (selectionWidth / image.size.width) * image.size.height
-                let selectionXCoordinate = point.x - (selectionWidth / 2)
-                let selectionYCoordinate = point.y - (selectionHeight / 2)
-                
-                selectionImageView.frame = CGRect(x: selectionXCoordinate, y: selectionYCoordinate, width: selectionWidth, height: selectionHeight)
-                
-                selectionsView.addSubview(selectionImageView)
-            }
-        }
-    }
+    
     
     fileprivate func clearSelectionsView() {
         selectionsView.subviews.forEach { (subview) in

@@ -37,6 +37,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5989CD2C219330C90013CC10 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		59D105672190924B00915DC6 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +70,7 @@
 				59D1057A2190924C00915DC6 /* Assets.xcassets */,
 				59D1057C2190924C00915DC6 /* LaunchScreen.storyboard */,
 				59D1057F2190924C00915DC6 /* Info.plist */,
+				5989CD2C219330C90013CC10 /* New Group */,
 			);
 			path = ScrollviewDemo;
 			sourceTree = "<group>";
@@ -289,7 +297,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H634JM33L;
 				INFOPLIST_FILE = ScrollviewDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,7 +316,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H634JM33L;
 				INFOPLIST_FILE = ScrollviewDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

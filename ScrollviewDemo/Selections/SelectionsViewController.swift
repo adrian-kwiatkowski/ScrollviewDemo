@@ -188,9 +188,23 @@ extension SelectionsViewController: AdditionalGestureDelegate {
     }
     
     func additionalGesture(_ gesture: AdditionalGestures, longpressedAt point: CGPoint) {
-        selectionsCoordinatesInRealm.append(Selection(point: point, isMarked: false))
+        let selectionWidthRatio: CGFloat = 0.24 // selection width should take 24% of the leaflet's width
+        let imageToSet = UIImage(named: "greenSelection.png") ?? UIImage()
+        let newSelectionView = UIImageView(image: imageToSet)
         
-        refreshSelectionsView()
+        let newSelectionViewWidth = imageView.bounds.width * selectionWidthRatio
+        let newSelectionViewHeight = (newSelectionViewWidth / imageToSet.size.width) * imageToSet.size.height
+        let newSelectionViewCenterX = point.x - (newSelectionViewWidth / 2)
+        let newSelectionViewCenterY = point.y - (newSelectionViewHeight / 2)
+        
+        newSelectionView.frame = CGRect(x: newSelectionViewCenterX, y: newSelectionViewCenterY, width: newSelectionViewWidth, height: newSelectionViewHeight)
+        selectionsView.addSubview(newSelectionView)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            newSelectionView.removeFromSuperview()
+            selectionsCoordinatesInRealm.append(Selection(point: point, isMarked: false))
+            self.refreshSelectionsView()
+        }
     }
 }
 

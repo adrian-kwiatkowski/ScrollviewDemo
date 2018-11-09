@@ -109,6 +109,9 @@ extension SelectionsViewController {
             let selection = selectionsCoordinatesInRealm[index]
             let point = selection.point
             let imageToSet = returnSelectionVariationImageAsset(number: index, isMarked: selection.isMarked)
+            if !selection.isMarked {
+                selectionImageView.tintColor = UIColor(red: 44.0 / 255.0, green: 196.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
+            }
             
             let subviewWidth = imageView.bounds.width * selectionWidthRatio
             let subviewHeight = (subviewWidth / imageToSet.size.width) * imageToSet.size.height
@@ -123,6 +126,7 @@ extension SelectionsViewController {
     func returnSelectionVariationImageAsset(number: Int, isMarked: Bool) -> UIImage {
         let imageVariationNumber = (number % 4) + 1
         let imageVariationName = isMarked ? "markedSelection\(imageVariationNumber).png" : "selection\(imageVariationNumber).png"
+        
         return UIImage(named: imageVariationName) ?? UIImage()
     }
 }
@@ -188,23 +192,58 @@ extension SelectionsViewController: AdditionalGestureDelegate {
     }
     
     func additionalGesture(_ gesture: AdditionalGestures, longpressedAt point: CGPoint) {
-        let selectionWidthRatio: CGFloat = 0.24 // selection width should take 24% of the leaflet's width
-        let imageToSet = UIImage(named: "greenSelection.png") ?? UIImage()
-        let newSelectionView = UIImageView(image: imageToSet)
+        gesture.disableGestureRecognizer()
+        let imageToSet = returnSelectionVariationImageAsset(number: selectionsCoordinatesInRealm.count, isMarked: false)
+ 
+        let newSelectionView = makeNewSelectionView(image: imageToSet, point: point)
+        newSelectionView.tintColor = UIColor(red: 44.0 / 255.0, green: 255.0 / 255.0, blue: 143.0 / 255.0, alpha: 1.0)
+        newSelectionView.tag = 99
+        selectionsView.addSubview(newSelectionView)
         
-        let newSelectionViewWidth = imageView.bounds.width * selectionWidthRatio
-        let newSelectionViewHeight = (newSelectionViewWidth / imageToSet.size.width) * imageToSet.size.height
+        let tapGestureDuringAddingSelection = UITapGestureRecognizer(target: self, action: #selector(handleTapDuringAddingSelection(recognizer:)))
+        selectionsView.addGestureRecognizer(tapGestureDuringAddingSelection)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.selectionsView.removeGestureRecognizer(tapGestureDuringAddingSelection)
+            
+            let viewLatestCenterPoint = newSelectionView.center
+            newSelectionView.removeFromSuperview()
+            
+            selectionsCoordinatesInRealm.append(Selection(point: viewLatestCenterPoint, isMarked: false))
+            self.refreshSelectionsView()
+            gesture.enableGestureRecognizer()
+        }
+
+    }
+    
+    @objc func handleTapDuringAddingSelection(recognizer: UITapGestureRecognizer) {
+        let tapLocation = recognizer.location(in: recognizer.view)
+        
+        guard let viewHandler = selectionsView.viewWithTag(99) as? UIImageView else { return }
+        let newFrame = calculateImageViewFrame(imageView: viewHandler, point: tapLocation)
+        viewHandler.frame = newFrame
+    }
+    
+    func makeNewSelectionView(image: UIImage, point: CGPoint) -> UIImageView {
+        let newSelectionView = UIImageView(image: image)
+        
+        newSelectionView.frame = calculateImageViewFrame(imageView: newSelectionView, point: point)
+        
+        return newSelectionView
+    }
+    
+    func calculateImageViewFrame(imageView: UIImageView, point: CGPoint) -> CGRect {
+        guard let image = imageView.image else { return CGRect() }
+        
+        let selectionWidthRatio: CGFloat = 0.24 // selection width should take 24% of the leaflet's width
+        let newSelectionViewWidth = self.imageView.bounds.width * selectionWidthRatio
+        let newSelectionViewHeight = (newSelectionViewWidth / image.size.width) * image.size.height
         let newSelectionViewCenterX = point.x - (newSelectionViewWidth / 2)
         let newSelectionViewCenterY = point.y - (newSelectionViewHeight / 2)
         
-        newSelectionView.frame = CGRect(x: newSelectionViewCenterX, y: newSelectionViewCenterY, width: newSelectionViewWidth, height: newSelectionViewHeight)
-        selectionsView.addSubview(newSelectionView)
+        let newFrame = CGRect(x: newSelectionViewCenterX, y: newSelectionViewCenterY, width: newSelectionViewWidth, height: newSelectionViewHeight)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            newSelectionView.removeFromSuperview()
-            selectionsCoordinatesInRealm.append(Selection(point: point, isMarked: false))
-            self.refreshSelectionsView()
-        }
+        return newFrame
     }
 }
 

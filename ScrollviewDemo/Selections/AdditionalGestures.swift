@@ -10,6 +10,8 @@ import UIKit
 
 protocol AdditionalGestures {
     func setupAdditionalGestures(forView: UIView)
+    func disableGestureRecognizer()
+    func enableGestureRecognizer()
     var gestureDelegate: AdditionalGestureDelegate? { get set }
 }
 
@@ -20,9 +22,11 @@ protocol AdditionalGestureDelegate: class {
 
 class AddingMode: AdditionalGestures {
     weak var gestureDelegate: AdditionalGestureDelegate?
+    var longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     
     func setupAdditionalGestures(forView: UIView) {
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        
         forView.addGestureRecognizer(longPress)
     }
     
@@ -31,6 +35,14 @@ class AddingMode: AdditionalGestures {
         let longPressedCenter = recognizer.location(in: recognizer.view)
         
         gestureDelegate?.additionalGesture(self, longpressedAt: longPressedCenter)
+    }
+    
+    func disableGestureRecognizer() {
+        longPress.isEnabled = false
+    }
+    
+    func enableGestureRecognizer() {
+        longPress.isEnabled = true
     }
 }
 
@@ -48,5 +60,11 @@ class EditingMode: AdditionalGestures {
     @objc func handleSingleTap(recognizer: UITapGestureRecognizer) {
         guard let recognizerImageView = recognizer.view as? UIImageView else { return }
         gestureDelegate?.additionalGesture(self, tappedAt: recognizerImageView)
+    }
+    
+    func disableGestureRecognizer() {
+    }
+    
+    func enableGestureRecognizer() {
     }
 }

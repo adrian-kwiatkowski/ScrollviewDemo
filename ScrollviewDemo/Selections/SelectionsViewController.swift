@@ -39,8 +39,10 @@ class SelectionsViewController: UIViewController {
         additionalGestures.setupAdditionalGestures(forView: selectionsView)
         additionalGestures.gestureDelegate = self
         
-        let hintDisplayedAlready = UserDefaults.standard.bool(forKey: "hintShown")
-        if !hintDisplayedAlready { setupAddingHintView() }
+        if let isInAddingMode = additionalGestures as? AddingMode, !isInAddingMode.hintDisplayedAlready {
+            setupAddingHintView()
+        }
+        
     }
     
     init(mode: AdditionalGestures) {
@@ -208,6 +210,7 @@ extension SelectionsViewController: AdditionalGestureDelegate {
     
     func additionalGesture(_ gesture: AdditionalGestures, longpressedAt point: CGPoint) {
         bottomBarView.isHidden = true
+        bottomBarView.removeFromSuperview()
         UserDefaults.standard.set(true, forKey: "hintShown")
         gesture.disableGestureRecognizer()
         let imageToSet = returnSelectionVariationImageAsset(number: selectionsCoordinatesInRealm.count, isMarked: false)

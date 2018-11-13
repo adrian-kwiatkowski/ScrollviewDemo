@@ -23,6 +23,7 @@ protocol AdditionalGestureDelegate: class {
 class AddingMode: AdditionalGestures {
     weak var gestureDelegate: AdditionalGestureDelegate?
     var longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
+    let hintDisplayedAlready = UserDefaults.standard.bool(forKey: "hintShown")
     
     func setupAdditionalGestures(forView: UIView) {
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))

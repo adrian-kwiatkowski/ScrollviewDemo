@@ -23,7 +23,7 @@ class SelectionsViewController: UIViewController {
     var imageView: UIImageView = UIImageView(image: UIImage(named: "leaflet.jpg"))
     var selectionsView: UIView = UIView()
     var containerView: UIView = UIView()
-    var bottomBarView: UIView?
+    var bottomBarView: UIView = UIView()
     
     var additionalGestures: AdditionalGestures
     
@@ -39,8 +39,8 @@ class SelectionsViewController: UIViewController {
         additionalGestures.setupAdditionalGestures(forView: selectionsView)
         additionalGestures.gestureDelegate = self
         
-        let shouldShowAddingHintView = true
-        if shouldShowAddingHintView { setupAddingHintView() }
+        let hintDisplayedAlready = UserDefaults.standard.bool(forKey: "hintShown")
+        if !hintDisplayedAlready { setupAddingHintView() }
     }
     
     init(mode: AdditionalGestures) {
@@ -81,18 +81,14 @@ class SelectionsViewController: UIViewController {
     }
     
     func setupAddingHintView() {
-        bottomBarView = UIView()
-        if let addingHintView = bottomBarView {
-            addingHintView.backgroundColor = UIColor(red: 240.0 / 255.0, green: 246.0 / 255.0, blue: 246.0 / 255.0, alpha: 1.0)
-            view.addSubview(addingHintView)
-            
-            addingHintView.translatesAutoresizingMaskIntoConstraints = false
-            addingHintView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
-            addingHintView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-            addingHintView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-            addingHintView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
-        }
+        bottomBarView = AddingHintView.initFromNib()
+        view.addSubview(bottomBarView)
         
+        bottomBarView.translatesAutoresizingMaskIntoConstraints = false
+        bottomBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        bottomBarView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        bottomBarView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
+        bottomBarView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
     }
 }
 
@@ -211,6 +207,8 @@ extension SelectionsViewController: AdditionalGestureDelegate {
     }
     
     func additionalGesture(_ gesture: AdditionalGestures, longpressedAt point: CGPoint) {
+        bottomBarView.isHidden = true
+        UserDefaults.standard.set(true, forKey: "hintShown")
         gesture.disableGestureRecognizer()
         let imageToSet = returnSelectionVariationImageAsset(number: selectionsCoordinatesInRealm.count, isMarked: false)
  

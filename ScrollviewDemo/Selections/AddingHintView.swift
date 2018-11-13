@@ -10,10 +10,6 @@ import UIKit
 
 class AddingHintView: UIView {
 
-    override func awakeFromNib() {
-        print("yeah")
-    }
-
 }
 
 

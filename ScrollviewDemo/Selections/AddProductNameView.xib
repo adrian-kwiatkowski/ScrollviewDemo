@@ -15,9 +15,37 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AddProductNameView" customModule="ScrollviewDemo" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" red="0.5" green="0.78771099830000002" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Sd4-vY-5cD">
+                    <rect key="frame" x="28" y="10" width="319" height="30"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Wpisz nazwę produktu lub zapisz go " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cU6-xl-YYK">
+                            <rect key="frame" x="0.0" y="0.0" width="231" height="30"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mW-d2-aXS" customClass="CTAButton" customModule="ScrollviewDemo" customModuleProvider="target">
+                            <rect key="frame" x="239" y="0.0" width="80" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="sa4-mQ-ug8"/>
+                            </constraints>
+                            <state key="normal" title="ZAPISZ"/>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647058823528" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Sd4-vY-5cD" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="GTl-bB-be2"/>
+                <constraint firstItem="Sd4-vY-5cD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vyF-TC-J1T"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="saveButton" destination="0mW-d2-aXS" id="bNd-4f-NkI"/>
+                <outlet property="textField" destination="cU6-xl-YYK" id="AcA-tr-byV"/>
+            </connections>
         </view>
     </objects>
 </document>

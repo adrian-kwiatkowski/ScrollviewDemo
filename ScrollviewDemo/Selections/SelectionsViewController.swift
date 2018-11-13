@@ -223,10 +223,11 @@ extension SelectionsViewController: AdditionalGestureDelegate {
         let tapGestureDuringAddingSelection = UITapGestureRecognizer(target: self, action: #selector(handleTapDuringAddingSelection(recognizer:)))
         selectionsView.addGestureRecognizer(tapGestureDuringAddingSelection)
         
-        let addProductNameView = AddProductNameView.initFromNib()
+        let addProductNameView = AddProductNameView.initFromNib() as AddProductNameView
         setupBottomBar(from: addProductNameView)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        addProductNameView.saveButtonAction = { (productName) in
+            print("\(productName)")
+            
             addProductNameView.isHidden = true
             addProductNameView.removeFromSuperview()
             self.selectionsView.removeGestureRecognizer(tapGestureDuringAddingSelection)
@@ -238,7 +239,6 @@ extension SelectionsViewController: AdditionalGestureDelegate {
             self.refreshSelectionsView()
             gesture.enableGestureRecognizer()
         }
-
     }
     
     @objc func handleTapDuringAddingSelection(recognizer: UITapGestureRecognizer) {

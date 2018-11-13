@@ -10,6 +10,8 @@ import UIKit
 
 class AddingHintView: UIView {
 
+    @IBOutlet weak var hintLabel: UILabel!
+    
 }
 
 

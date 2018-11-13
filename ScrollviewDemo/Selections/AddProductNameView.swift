@@ -9,5 +9,16 @@
 import UIKit
 
 class AddProductNameView: UIView {
-
+    @IBOutlet weak var saveButton: CTAButton!
+    @IBOutlet weak var textField: UITextField!
+    
+    public var saveButtonAction: ((String?) -> ())?
+    
+    override func awakeFromNib() {
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func saveButtonTapped() {
+        saveButtonAction?(textField.text)
+    }
 }

@@ -54,7 +54,23 @@ class SelectionsViewController: UIViewController {
         
         if let isInAddingMode = additionalGestures as? AddingMode, !isInAddingMode.hintDisplayedAlready {
             addingHintBarView = AddingHintView.initFromNib()
-            setupBottomBar(from: addingHintBarView)
+            view.addSubview(addingHintBarView)
+            
+            let topConstraint = addingHintBarView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0)
+            
+            addingHintBarView.translatesAutoresizingMaskIntoConstraints = false
+            topConstraint.isActive = true
+            addingHintBarView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+            addingHintBarView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
+            addingHintBarView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                UIView.animate(withDuration: 0.5, animations: {
+                    topConstraint.isActive = false
+                    self.addingHintBarView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+                    self.view.layoutIfNeeded()
+                })
+            }
         }
         
     }
@@ -94,16 +110,6 @@ class SelectionsViewController: UIViewController {
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
-    }
-    
-    func setupBottomBar(from barView: UIView) {
-        view.addSubview(barView)
-        
-        barView.translatesAutoresizingMaskIntoConstraints = false
-        barView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
-        barView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        barView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-        barView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
     }
 }
 
@@ -222,8 +228,13 @@ extension SelectionsViewController: AdditionalGestureDelegate {
     }
     
     func additionalGesture(_ gesture: AdditionalGestures, longpressedAt point: CGPoint) {
-        addingHintBarView.isHidden = true
-        addingHintBarView.removeFromSuperview()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.addingHintBarView.alpha = 0.0
+        }) { (finished) in
+            self.addingHintBarView.isHidden = true
+            self.addingHintBarView.removeFromSuperview()
+        }
         UserDefaults.standard.set(true, forKey: "hintShown")
         gesture.disableGestureRecognizer()
         let imageToSet = returnSelectionVariationImageAsset(number: selectionsCoordinatesInRealm.count, isMarked: false)
@@ -236,8 +247,8 @@ extension SelectionsViewController: AdditionalGestureDelegate {
         let tapGestureDuringAddingSelection = UITapGestureRecognizer(target: self, action: #selector(handleTapDuringAddingSelection(recognizer:)))
         selectionsView.addGestureRecognizer(tapGestureDuringAddingSelection)
         
-        inputAccessoryView?.isHidden = false
-        inputAccessoryView?.saveButtonAction = { (productName) in
+//        inputAccessoryView?.isHidden = false
+        inputAccessoryView?.saveButtonAction = { (productName) in // weak inputAccessoryView
             print("\(productName)")
             self.inputAccessoryView?.isHidden = true
             self.inputAccessoryView?.textField.text = ""

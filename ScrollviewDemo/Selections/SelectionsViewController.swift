@@ -242,25 +242,45 @@ extension SelectionsViewController: AdditionalGestureDelegate {
         let newSelectionView = makeNewSelectionView(image: imageToSet, point: point)
         newSelectionView.tintColor = UIColor(red: 44.0 / 255.0, green: 255.0 / 255.0, blue: 143.0 / 255.0, alpha: 1.0)
         newSelectionView.tag = 99
+        newSelectionView.alpha = 0.0
         selectionsView.addSubview(newSelectionView)
+        
+        UIView.animate(withDuration: 0.2) {
+            newSelectionView.alpha = 1.0
+        }
         
         let tapGestureDuringAddingSelection = UITapGestureRecognizer(target: self, action: #selector(handleTapDuringAddingSelection(recognizer:)))
         selectionsView.addGestureRecognizer(tapGestureDuringAddingSelection)
         
         inputAccessoryView?.isHidden = false
+        inputAccessoryView?.transform = CGAffineTransform(translationX: 0.0, y: 50.0)
+        UIView.animate(withDuration: 0.25) {
+            self.inputAccessoryView?.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
+        }
+        
         inputAccessoryView?.saveButtonAction = { (productName) in // weak inputAccessoryView?
-            print("\(productName)")
-            self.inputAccessoryView?.isHidden = true
-            self.inputAccessoryView?.textField.text = ""
+            
             self.inputAccessoryView?.textField.resignFirstResponder()
+            UIView.animate(withDuration: 0.25, animations: {
+                self.inputAccessoryView?.transform = CGAffineTransform(translationX: 0.0, y: 50.0)
+            }, completion: { (finished) in
+                self.inputAccessoryView?.isHidden = true
+                self.inputAccessoryView?.textField.text = ""
+                
+            })
+            
             self.selectionsView.removeGestureRecognizer(tapGestureDuringAddingSelection)
             
-            let viewLatestCenterPoint = newSelectionView.center
-            newSelectionView.removeFromSuperview()
-            
-            selectionsCoordinatesInRealm.append(Selection(point: viewLatestCenterPoint, isMarked: false))
-            self.refreshSelectionsView()
-            gesture.enableGestureRecognizer()
+            UIView.animate(withDuration: 0.2, animations: {
+                newSelectionView.tintColor = UIColor(red: 44.0 / 255.0, green: 196.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
+            }, completion: { (finished) in
+                print("\(productName)")
+                let viewLatestCenterPoint = newSelectionView.center
+                newSelectionView.removeFromSuperview()
+                selectionsCoordinatesInRealm.append(Selection(point: viewLatestCenterPoint, isMarked: false))
+                self.refreshSelectionsView()
+                gesture.enableGestureRecognizer()
+            })
         }
     }
     
@@ -269,7 +289,9 @@ extension SelectionsViewController: AdditionalGestureDelegate {
         
         guard let viewHandler = selectionsView.viewWithTag(99) as? UIImageView else { return }
         let newFrame = calculateImageViewFrame(imageView: viewHandler, point: tapLocation)
-        viewHandler.frame = newFrame
+        UIView.animate(withDuration: 0.25) {
+            viewHandler.frame = newFrame
+        }
     }
     
     func makeNewSelectionView(image: UIImage, point: CGPoint) -> UIImageView {

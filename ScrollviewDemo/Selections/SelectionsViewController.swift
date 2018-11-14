@@ -27,6 +27,19 @@ class SelectionsViewController: UIViewController {
     
     var additionalGestures: AdditionalGestures
     
+    override var canBecomeFirstResponder: Bool { return true }
+    
+    var _inputAccessoryView: AddProductNameView!
+    override var inputAccessoryView: AddProductNameView? {
+        if _inputAccessoryView == nil {
+
+            _inputAccessoryView = AddProductNameView.initFromNib()
+            _inputAccessoryView.isHidden = true
+        }
+        
+        return _inputAccessoryView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSelectionsView()
@@ -223,13 +236,12 @@ extension SelectionsViewController: AdditionalGestureDelegate {
         let tapGestureDuringAddingSelection = UITapGestureRecognizer(target: self, action: #selector(handleTapDuringAddingSelection(recognizer:)))
         selectionsView.addGestureRecognizer(tapGestureDuringAddingSelection)
         
-        let addProductNameView = AddProductNameView.initFromNib() as AddProductNameView
-        setupBottomBar(from: addProductNameView)
-        addProductNameView.saveButtonAction = { (productName) in
+        inputAccessoryView?.isHidden = false
+        inputAccessoryView?.saveButtonAction = { (productName) in
             print("\(productName)")
-            
-            addProductNameView.isHidden = true
-            addProductNameView.removeFromSuperview()
+            self.inputAccessoryView?.isHidden = true
+            self.inputAccessoryView?.textField.text = ""
+            self.inputAccessoryView?.textField.resignFirstResponder()
             self.selectionsView.removeGestureRecognizer(tapGestureDuringAddingSelection)
             
             let viewLatestCenterPoint = newSelectionView.center

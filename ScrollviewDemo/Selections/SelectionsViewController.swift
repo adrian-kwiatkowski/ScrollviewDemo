@@ -247,8 +247,8 @@ extension SelectionsViewController: AdditionalGestureDelegate {
         let tapGestureDuringAddingSelection = UITapGestureRecognizer(target: self, action: #selector(handleTapDuringAddingSelection(recognizer:)))
         selectionsView.addGestureRecognizer(tapGestureDuringAddingSelection)
         
-//        inputAccessoryView?.isHidden = false
-        inputAccessoryView?.saveButtonAction = { (productName) in // weak inputAccessoryView
+        inputAccessoryView?.isHidden = false
+        inputAccessoryView?.saveButtonAction = { (productName) in // weak inputAccessoryView?
             print("\(productName)")
             self.inputAccessoryView?.isHidden = true
             self.inputAccessoryView?.textField.text = ""

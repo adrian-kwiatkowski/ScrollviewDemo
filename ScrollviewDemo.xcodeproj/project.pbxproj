@@ -7,35 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5954087A219AED1400C181FB /* AddingHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59540879219AED1400C181FB /* AddingHintView.xib */; };
-		5954087C219AEF3D00C181FB /* AddingHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954087B219AEF3D00C181FB /* AddingHintView.swift */; };
-		5954087E219B123100C181FB /* AddProductNameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5954087D219B123100C181FB /* AddProductNameView.xib */; };
-		59540880219B124300C181FB /* AddProductNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954087F219B124300C181FB /* AddProductNameView.swift */; };
-		59540882219B1A4200C181FB /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59540881219B1A4100C181FB /* CTAButton.swift */; };
-		5989CD2E21944F960013CC10 /* AdditionalGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5989CD2D21944F960013CC10 /* AdditionalGestures.swift */; };
+		15969C5221EFDC5E0088892A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15969C5121EFDC5E0088892A /* Assets.xcassets */; };
 		59D105742190924B00915DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105732190924B00915DC6 /* AppDelegate.swift */; };
-		59D105762190924B00915DC6 /* SelectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105752190924B00915DC6 /* SelectionsViewController.swift */; };
+		59D105762190924B00915DC6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D105752190924B00915DC6 /* MainViewController.swift */; };
 		59D105792190924B00915DC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D105772190924B00915DC6 /* Main.storyboard */; };
-		59D1057B2190924C00915DC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59D1057A2190924C00915DC6 /* Assets.xcassets */; };
 		59D1057E2190924C00915DC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D1057C2190924C00915DC6 /* LaunchScreen.storyboard */; };
-		59D1058A21919AD700915DC6 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D1058921919AD700915DC6 /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		59540879219AED1400C181FB /* AddingHintView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddingHintView.xib; sourceTree = "<group>"; };
-		5954087B219AEF3D00C181FB /* AddingHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingHintView.swift; sourceTree = "<group>"; };
-		5954087D219B123100C181FB /* AddProductNameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddProductNameView.xib; sourceTree = "<group>"; };
-		5954087F219B124300C181FB /* AddProductNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductNameView.swift; sourceTree = "<group>"; };
-		59540881219B1A4100C181FB /* CTAButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAButton.swift; sourceTree = "<group>"; };
-		5989CD2D21944F960013CC10 /* AdditionalGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalGestures.swift; sourceTree = "<group>"; };
+		15969C5121EFDC5E0088892A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59D105702190924B00915DC6 /* ScrollviewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollviewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D105732190924B00915DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59D105752190924B00915DC6 /* SelectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsViewController.swift; sourceTree = "<group>"; };
+		59D105752190924B00915DC6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		59D105782190924B00915DC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		59D1057A2190924C00915DC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59D1057D2190924C00915DC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59D1057F2190924C00915DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59D1058921919AD700915DC6 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,19 +35,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5989CD2C219330C90013CC10 /* Selections */ = {
-			isa = PBXGroup;
-			children = (
-				59D105752190924B00915DC6 /* SelectionsViewController.swift */,
-				5989CD2D21944F960013CC10 /* AdditionalGestures.swift */,
-				5954087B219AEF3D00C181FB /* AddingHintView.swift */,
-				59540879219AED1400C181FB /* AddingHintView.xib */,
-				5954087F219B124300C181FB /* AddProductNameView.swift */,
-				5954087D219B123100C181FB /* AddProductNameView.xib */,
-			);
-			path = Selections;
-			sourceTree = "<group>";
-		};
 		59D105672190924B00915DC6 = {
 			isa = PBXGroup;
 			children = (
@@ -81,14 +54,12 @@
 		59D105722190924B00915DC6 /* ScrollviewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				59D105752190924B00915DC6 /* MainViewController.swift */,
 				59D105732190924B00915DC6 /* AppDelegate.swift */,
-				59D1058921919AD700915DC6 /* MenuViewController.swift */,
 				59D105772190924B00915DC6 /* Main.storyboard */,
-				59D1057A2190924C00915DC6 /* Assets.xcassets */,
 				59D1057C2190924C00915DC6 /* LaunchScreen.storyboard */,
-				59540881219B1A4100C181FB /* CTAButton.swift */,
 				59D1057F2190924C00915DC6 /* Info.plist */,
-				5989CD2C219330C90013CC10 /* Selections */,
+				15969C5121EFDC5E0088892A /* Assets.xcassets */,
 			);
 			path = ScrollviewDemo;
 			sourceTree = "<group>";
@@ -151,10 +122,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5954087A219AED1400C181FB /* AddingHintView.xib in Resources */,
 				59D1057E2190924C00915DC6 /* LaunchScreen.storyboard in Resources */,
-				59D1057B2190924C00915DC6 /* Assets.xcassets in Resources */,
-				5954087E219B123100C181FB /* AddProductNameView.xib in Resources */,
+				15969C5221EFDC5E0088892A /* Assets.xcassets in Resources */,
 				59D105792190924B00915DC6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,13 +135,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59D105762190924B00915DC6 /* SelectionsViewController.swift in Sources */,
-				59D1058A21919AD700915DC6 /* MenuViewController.swift in Sources */,
-				5989CD2E21944F960013CC10 /* AdditionalGestures.swift in Sources */,
+				59D105762190924B00915DC6 /* MainViewController.swift in Sources */,
 				59D105742190924B00915DC6 /* AppDelegate.swift in Sources */,
-				59540882219B1A4200C181FB /* CTAButton.swift in Sources */,
-				5954087C219AEF3D00C181FB /* AddingHintView.swift in Sources */,
-				59540880219B124300C181FB /* AddProductNameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

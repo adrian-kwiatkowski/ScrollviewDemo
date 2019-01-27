@@ -16,34 +16,34 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSelectionsView()
-        setupContainerView()
-        setupScrollView()
-        
+        setupViews()
+        setupViewsHierarchy()
+        setupConstraints()
         setupGestureRecognizers()
     }
     
-    func setupSelectionsView() {
-        applesView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
-    }
-    
-    func setupContainerView() {
+    func setupViews() {
         containerView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
-        containerView.addSubview(imageView)
-        containerView.addSubview(applesView)
-    }
-    
-    func setupScrollView() {
+        
+        applesView.frame = CGRect(x: 0, y: 0, width: imageView.bounds.width, height: imageView.bounds.height)
+        
         scrollView.backgroundColor = UIColor.black
         scrollView.delegate = self
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.contentSize = containerView.bounds.size
-        scrollView.addSubview(containerView)
         
         setZoomScale()
-        
+    }
+    
+    func setupViewsHierarchy() {
         view.addSubview(scrollView)
+        scrollView.addSubview(containerView)
+        containerView.addSubview(imageView)
+        containerView.addSubview(applesView)
+    }
+    
+    func setupConstraints() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
@@ -55,9 +55,9 @@ class MainViewController: UIViewController {
 // MARK: - gestures
 extension MainViewController {
     func setupGestureRecognizers() {
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
-        doubleTap.numberOfTapsRequired = 2
-        applesView.addGestureRecognizer(doubleTap)
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        applesView.addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
     @objc func handleDoubleTap(recognizer: UITapGestureRecognizer) {

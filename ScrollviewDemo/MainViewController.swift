@@ -58,6 +58,9 @@ extension MainViewController {
         let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         applesView.addGestureRecognizer(doubleTapGestureRecognizer)
+        
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        applesView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     @objc func handleDoubleTap(recognizer: UITapGestureRecognizer) {
@@ -67,6 +70,21 @@ extension MainViewController {
         } else {
             scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
         }
+    }
+    
+    @objc func handleLongPress(recognizer: UITapGestureRecognizer) {
+        guard recognizer.state == .began else { return }
+        let tapLocation = recognizer.location(in: applesView)
+        
+        let labelFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: 170, height: 170))
+        let emojiLabel = UILabel(frame: labelFrame)
+        emojiLabel.font = emojiLabel.font.withSize(150.0)
+        
+        let applesVariants = ["🍏", "🍎"]
+        emojiLabel.text = applesVariants.randomElement()
+        emojiLabel.center = tapLocation
+        
+        applesView.addSubview(emojiLabel)
     }
 }
 
